@@ -2,7 +2,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "beacon-node.name" -}}
+{{- define "lighthouse-beacon-node.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -11,7 +11,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "beacon-node.fullname" -}}
+{{- define "lighthouse-beacon-node.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -27,16 +27,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "beacon-node.chart" -}}
+{{- define "lighthouse-beacon-node.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "beacon-node.labels" -}}
-helm.sh/chart: {{ include "beacon-node.chart" . }}
-{{ include "beacon-node.selectorLabels" . }}
+{{- define "lighthouse-beacon-node.labels" -}}
+helm.sh/chart: {{ include "lighthouse-beacon-node.chart" . }}
+{{ include "lighthouse-beacon-node.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -46,17 +46,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "beacon-node.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "beacon-node.name" . }}
+{{- define "lighthouse-beacon-node.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "lighthouse-beacon-node.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "beacon-node.serviceAccountName" -}}
+{{- define "lighthouse-beacon-node.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "beacon-node.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "lighthouse-beacon-node.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

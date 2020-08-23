@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "beacon-node.fullname" . }}
+  name: {{ include "lighthouse-beacon-node.fullname" . }}
   labels:
-    {{- include "beacon-node.labels" . | nindent 4 }}
+    {{- include "lighthouse-beacon-node.labels" . | nindent 4 }}
 spec:
   selector:
     matchLabels:
-      {{- include "beacon-node.selectorLabels" . | nindent 6 }}
-  serviceName: {{ include "beacon-node.fullname" . }}
+      {{- include "lighthouse-beacon-node.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "lighthouse-beacon-node.fullname" . }}
   replicas: {{ .Values.replicas }}
   template:
     metadata:
       labels:
-        {{- include "beacon-node.selectorLabels" . | nindent 8 }}
+        {{- include "lighthouse-beacon-node.selectorLabels" . | nindent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
