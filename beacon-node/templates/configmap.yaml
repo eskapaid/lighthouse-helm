@@ -1,0 +1,9 @@
+{{- if .Values.config }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "beacon-node.fullname" . }}-config
+data:
+  beacon-node.yaml: |
+{{ toYaml .Values.config | indent 4 }}
+{{- end }}
