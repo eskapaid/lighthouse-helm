@@ -1,0 +1,43 @@
+image:
+  repository: sigp/lighthouse
+  tag: latest
+
+replicas: 1
+
+container:
+  command:
+    - lighthouse
+    - beacon_node
+  args:
+    - --datadir
+    - /data
+    - --debug-level
+    - info
+    - --testnet
+    - medalla
+    - --http
+    - --http-address
+    - "0.0.0.0"
+    - --ws
+    - --ws-address
+    - "0.0.0.0"
+    - --eth1-endpoint
+    - https://cloudflare-eth.com
+    - --graffiti
+    - Lighthouse Beacon
+
+ports:
+  metrics: 5052
+  websocket: 5053
+  discovery: 9000
+
+storage:
+  capacity: 20Gi
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 1Gi
+  limits:
+    cpu: 500m
+    memory: 2Gi
