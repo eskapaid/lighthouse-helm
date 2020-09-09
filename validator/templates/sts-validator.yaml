@@ -42,7 +42,6 @@ spec:
             {{- range .Values.secretMounts }}
             - name: {{ .name }}
               mountPath: {{ .path }}
-              readOnly: true
             {{- end }}
           ports:
             - name: metrics
