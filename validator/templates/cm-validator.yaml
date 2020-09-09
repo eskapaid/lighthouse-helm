@@ -2,8 +2,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "lighthouse-beacon-node.fullname" . }}-config
+  name: {{ include "lighthouse-validator.fullname" . }}-config
 data:
-  lighthouse-beacon-node.yaml: |
+  lighthouse-validator.yaml: |
 {{ toYaml .Values.config | indent 4 }}
 {{- end }}

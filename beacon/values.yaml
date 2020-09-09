@@ -23,8 +23,6 @@ container:
     - "0.0.0.0"
     - --eth1-endpoint
     - https://cloudflare-eth.com
-    - --graffiti
-    - Lighthouse Beacon
 
 ports:
   metrics: 5052

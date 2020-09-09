@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "lighthouse-beacon-node.fullname" . }}
+  name: {{ include "lighthouse-validator.fullname" . }}
   labels:
-    {{- include "lighthouse-beacon-node.labels" . | nindent 4 }}
+    {{- include "lighthouse-validator.labels" . | nindent 4 }}
 spec:
   selector:
     matchLabels:
-      {{- include "lighthouse-beacon-node.selectorLabels" . | nindent 6 }}
-  serviceName: {{ include "lighthouse-beacon-node.fullname" . }}
+      {{- include "lighthouse-validator.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "lighthouse-validator.fullname" . }}  
   replicas: {{ .Values.replicas }}
   template:
     metadata:
       labels:
-        {{- include "lighthouse-beacon-node.selectorLabels" . | nindent 8 }}
+        {{- include "lighthouse-validator.selectorLabels" . | nindent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
@@ -32,41 +32,30 @@ spec:
             httpGet:
               path: /node/health
               port: {{ .Values.ports.metrics }}
-            failureThreshold: 60
-            initialDelaySeconds: 600
-            periodSeconds: 60
-            timeoutSeconds: 5
-          readinessProbe:
-            httpGet:
-              path: /node/health
-              port: {{ .Values.ports.metrics }}
             failureThreshold: 3
             initialDelaySeconds: 60
             periodSeconds: 10
             timeoutSeconds: 5
           volumeMounts:
-            - name: beacon-data-storage
+            - name: validator-data
               mountPath: /data
-            {{- if .Values.config }}
-            - name: config-volume
-              mountPath: /data/config
+            {{- range .Values.secretMounts }}
+            - name: {{ .name }}
+              mountPath: {{ .path }}
+              readOnly: true
             {{- end }}
           ports:
             - name: metrics
               containerPort: {{ .Values.ports.metrics }}
-            - name: discovery
-              containerPort: {{ .Values.ports.discovery  }}
-            - name: websocket
-              containerPort: {{ .Values.ports.websocket }}
       volumes:
-        {{- if .Values.config }}
-        - name: config-volume
-          configMap:
-            name: beacon-config
+        {{- range .Values.secretMounts }}
+          - name: {{ .name }}
+            secret:
+              secretName: {{ .secretName }}
         {{- end }}
   volumeClaimTemplates:
     - metadata:
-        name: beacon-data-storage
+        name: validator-data
       spec:
         storageClassName: manual
         accessModes: 
