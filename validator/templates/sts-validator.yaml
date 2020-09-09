@@ -15,16 +15,23 @@ spec:
       labels:
         {{- include "lighthouse-validator.selectorLabels" . | nindent 8 }}
     spec:
+      initContainers:
+        - name: setup
+          image: busybox
+          command:
+          - /bin/sh
+          - -c
+          - mkdir -p /data/validators && cp -rL /data/mount/* /data/validators/
+          volumeMounts:
+          - name: validator-data
+            mountPath: /data
+          {{- range .Values.secretMounts }}
+          - name: {{ .name }}
+            mountPath: {{ .path }}
+          {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                - /bin/sh
-                - -c
-                - cp -rL /data/mount /data/validators
           {{- if .Values.container.command }}
           command:
 {{ toYaml .Values.container.command | indent 12 }}
@@ -35,21 +42,9 @@ spec:
           {{- end }}
           resources: 
 {{ toYaml .Values.resources | indent 12 }}
-          livenessProbe:
-            httpGet:
-              path: /node/health
-              port: {{ .Values.ports.metrics }}
-            failureThreshold: 3
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            timeoutSeconds: 5
           volumeMounts:
             - name: validator-data
               mountPath: /data
-            {{- range .Values.secretMounts }}
-            - name: {{ .name }}
-              mountPath: {{ .path }}
-            {{- end }}
           ports:
             - name: metrics
               containerPort: {{ .Values.ports.metrics }}
