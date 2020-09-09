@@ -24,7 +24,7 @@ spec:
                 command:
                 - /bin/sh
                 - -c
-                - cp -r /data/mount /data/validators
+                - cp -rL /data/mount /data/validators
           {{- if .Values.container.command }}
           command:
 {{ toYaml .Values.container.command | indent 12 }}
