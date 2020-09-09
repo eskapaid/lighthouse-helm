@@ -8,12 +8,6 @@ spec:
   selector:
     {{- include "lighthouse-validator.selectorLabels" . | nindent 4 }}
   ports:
-    - protocol: TCP
-      port: {{ (index .Values "config" "p2p-tcp-port") | default 13000 }}
-      name: p2p-tcp
-    - protocol: UDP
-      port: {{ (index .Values "config" "p2p-udp-port") | default 12000 }}
-      name: p2p-udp
-    - protocol: TCP
-      port: {{ (index .Values "config" "monitoring-port") | default 8080 }}
-      name: monitoring
+    - name: metrics
+      port: {{ .Values.ports.metrics }}
+      protocol: TCP

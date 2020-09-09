@@ -2,7 +2,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "validator.name" -}}
+{{- define "lighthouse-validator.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -11,7 +11,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "validator.fullname" -}}
+{{- define "lighthouse-validator.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -27,16 +27,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "validator.chart" -}}
+{{- define "lighthouse-validator.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "validator.labels" -}}
-helm.sh/chart: {{ include "validator.chart" . }}
-{{ include "validator.selectorLabels" . }}
+{{- define "lighthouse-validator.labels" -}}
+helm.sh/chart: {{ include "lighthouse-validator.chart" . }}
+{{ include "lighthouse-validator.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -46,17 +46,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "validator.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "validator.name" . }}
+{{- define "lighthouse-validator.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "lighthouse-validator.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "validator.serviceAccountName" -}}
+{{- define "lighthouse-validator.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "validator.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "lighthouse-validator.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
