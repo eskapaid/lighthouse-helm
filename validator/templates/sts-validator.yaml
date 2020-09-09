@@ -58,8 +58,7 @@ spec:
     - metadata:
         name: validator-data
       spec:
-        storageClassName: manual
-        accessModes: 
+        accessModes:
           - "ReadWriteOnce"
         resources:
           requests:

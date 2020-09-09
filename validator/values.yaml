@@ -24,13 +24,14 @@ container:
 # A list of secrets and their paths to mount inside the pod
 # keystore secret containing keystore.json
 # definitions secrets containing validator_definitions.yml
+# These will be copied by initContainer from /data/mount to /data/validators
 secretMounts: []
 #  - name: keystore
 #    secretName: keystore
-#    path: /data/0x0000
+#    path: /data/mount/0x0000
 #  - name: definitions
 #    secretName: definitions
-#    path: /data/validator_definitions.yml
+#    path: /data/mount
 
 ports:
   metrics: 5052
