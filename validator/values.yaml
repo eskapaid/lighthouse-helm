@@ -16,7 +16,7 @@ container:
     - --disable-auto-discover
     - --testnet
     - medalla
-    - --server
+    - --beacon-node
     - http://lighthouse-beacon:5052
     - --graffiti
     - Lighthouse Validator
@@ -34,7 +34,7 @@ secretMounts: []
 #    path: /data/mount
 
 ports:
-  metrics: 5052
+  metrics: 5054
 
 storage:
   capacity: 1Gi
