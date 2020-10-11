@@ -21,7 +21,7 @@ spec:
           command:
           - /bin/sh
           - -c
-          - mkdir -p /data/validators && cp -rL /data/mount/* /data/validators/
+          - mkdir -p /data/medalla/validators && cp -rL /data/mount/* /data/medalla/validators/
           volumeMounts:
           - name: validator-data
             mountPath: /data
