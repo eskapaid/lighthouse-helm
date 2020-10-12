@@ -1,8 +1,9 @@
 image:
   repository: sigp/lighthouse
   tag: latest
+  pullPolicy: IfNotPresent
 
-replicas: 1
+replicaCount: 1
 
 container:
   command:
@@ -21,9 +22,11 @@ container:
     - --ws
     - --ws-address
     - "0.0.0.0"
+    - --metrics
+    - --metrics-address
+    - "0.0.0.0"
     - --eth1-endpoint
     - https://cloudflare-eth.com
-    - --metrics
 
 ports:
   metrics: 5054
@@ -36,7 +39,9 @@ storage:
 resources:
   requests:
     cpu: 250m
-    memory: 1Gi
+    memory: 2Gi
   limits:
     cpu: 500m
-    memory: 2Gi
+    memory: 3Gi
+
+affinity: {}
