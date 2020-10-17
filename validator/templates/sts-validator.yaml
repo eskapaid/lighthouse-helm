@@ -9,7 +9,7 @@ spec:
     matchLabels:
       {{- include "lighthouse-validator.selectorLabels" . | nindent 6 }}
   serviceName: {{ include "lighthouse-validator.fullname" . }}  
-  replicas: {{ .Values.replicas }}
+  replicas: 1
   template:
     metadata:
       labels:

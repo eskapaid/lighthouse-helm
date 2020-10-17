@@ -9,7 +9,7 @@ spec:
     matchLabels:
       {{- include "lighthouse-beacon.selectorLabels" . | nindent 6 }}
   serviceName: {{ include "lighthouse-beacon.fullname" . }}
-  replicas: {{ .Values.replicaCount }}
+  replicas: 1
   template:
     metadata:
       labels:
