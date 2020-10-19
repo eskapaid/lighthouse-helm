@@ -53,12 +53,10 @@ spec:
               mountPath: /data/config
             {{- end }}
           ports:
-            - name: metrics
-              containerPort: {{ .Values.ports.metrics }}
-            - name: discovery
-              containerPort: {{ .Values.ports.discovery  }}
-            - name: websocket
-              containerPort: {{ .Values.ports.websocket }}
+            {{- range $key, $val := .Values.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $val }}
+            {{- end }}
       volumes:
         {{- if .Values.config }}
         - name: beacon-config
