@@ -4,6 +4,7 @@ metadata:
   name: {{ include "lighthouse-beacon.fullname" . }}
   labels:
     {{- include "lighthouse-beacon.labels" . | nindent 4 }}
+    app: {{ template "lighthouse-beacon.name" . }}
 spec:
   selector:
     {{- include "lighthouse-beacon.selectorLabels" . | nindent 4 }}

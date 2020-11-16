@@ -43,3 +43,6 @@ resources:
     memory: 3Gi
 
 affinity: {}
+
+servicemonitor:
+  enabled: false
