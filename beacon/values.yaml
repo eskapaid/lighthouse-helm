@@ -1,6 +1,6 @@
 image:
   repository: sigp/lighthouse
-  tag: latest
+  tag: stable
   pullPolicy: IfNotPresent
 
 container:
@@ -12,8 +12,8 @@ container:
     - /data
     - --debug-level
     - info
-    - --testnet
-    - medalla
+    - --network
+    - pyrmont
     - --http
     - --http-address
     - "0.0.0.0"
