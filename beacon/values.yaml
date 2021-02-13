@@ -64,8 +64,6 @@ resources: {}
   #   cpu: 500m
   #   memory: 3Gi
 
-affinity: {}
-
 service:
   enabled: true
   type: NodePort
@@ -73,8 +71,8 @@ service:
 servicemonitor:
   enabled: false
 
+affinity: {}
+
 nodeSelector: {}
 
 tolerations: []
-
-affinity: {}
