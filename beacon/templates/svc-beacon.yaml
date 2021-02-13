@@ -1,3 +1,4 @@
+{{- if .Values.service.enabled -}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -6,6 +7,7 @@ metadata:
     {{- include "lighthouse-beacon.labels" . | nindent 4 }}
     app: {{ template "lighthouse-beacon.name" . }}
 spec:
+  type: {{ .Values.service.type }}
   selector:
     {{- include "lighthouse-beacon.selectorLabels" . | nindent 4 }}
   ports:
@@ -17,3 +19,4 @@ spec:
       port: {{ $val }}
       protocol: TCP
     {{- end }}
+{{- end -}}

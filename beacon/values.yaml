@@ -1,3 +1,5 @@
+enabled: true
+
 image:
   repository: sigp/lighthouse
   tag: stable
@@ -6,7 +8,7 @@ image:
 container:
   command:
     - lighthouse
-    - beacon_node
+    - beacon
   args:
     - --datadir
     - /data
@@ -63,6 +65,10 @@ resources: {}
   #   memory: 3Gi
 
 affinity: {}
+
+service:
+  enabled: true
+  type: NodePort
 
 servicemonitor:
   enabled: false
