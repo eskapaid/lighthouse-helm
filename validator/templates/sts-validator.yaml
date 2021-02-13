@@ -40,6 +40,10 @@ spec:
           args:
 {{ toYaml .Values.container.args | indent 12 }}
           {{- end }}
+          livenessProbe:
+            {{- toYaml .livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .readinessProbe | nindent 12 }}
           resources: 
 {{ toYaml .Values.resources | indent 12 }}
           volumeMounts:
@@ -48,6 +52,18 @@ spec:
           ports:
             - name: metrics
               containerPort: {{ .Values.ports.metrics }}
+    {{- with .nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
       volumes:
         {{- range .Values.secretMounts }}
           - name: {{ .name }}
