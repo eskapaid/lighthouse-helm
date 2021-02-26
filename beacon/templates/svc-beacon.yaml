@@ -11,12 +11,13 @@ spec:
   selector:
     {{- include "lighthouse-beacon.selectorLabels" . | nindent 4 }}
   ports:
+    - name: metrics
+      port: {{ .Values.ports.metrics  }}
+      protocol: TCP
+    - name: discovery-tcp
+      port: {{ .Values.ports.discovery  }}
+      protocol: TCP
     - name: discovery-udp
       port: {{ .Values.ports.discovery  }}
       protocol: UDP
-    {{- range $key, $val := .Values.ports }}
-    - name: {{ $key }}
-      port: {{ $val }}
-      protocol: TCP
-    {{- end }}
 {{- end -}}

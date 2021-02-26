@@ -58,10 +58,24 @@ spec:
               mountPath: /data/config
             {{- end }}
           ports:
-            {{- range $key, $val := .Values.ports }}
-            - name: {{ $key }}
-              containerPort: {{ $val }}
-            {{- end }}
+            - name: http
+              containerPort: {{ .Values.ports.http }}
+              protocol: TCP
+            - name: metrics
+              containerPort: {{ .Values.ports.metrics }}
+              protocol: TCP
+            - name: discovery-tcp
+              containerPort: {{ .Values.ports.discovery }}
+              protocol: TCP
+              {{- if .Values.hostPort.enabled }}
+              hostPort: {{ .Values.ports.discovery }}
+              {{- end }}
+            - name: discovery-udp
+              containerPort: {{ .Values.ports.discovery }}
+              protocol: UDP
+              {{- if .Values.hostPort.enabled }}
+              hostPort: {{ .Values.ports.discovery }}
+              {{- end }}
     {{- with .nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
