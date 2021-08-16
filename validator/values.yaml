@@ -21,22 +21,18 @@ container:
     - --graffiti
     - Lighthouse Validator
 
-# A list of secrets and their paths to mount inside the pod
-# keystore secret containing keystore.json
-# definitions secrets containing validator_definitions.yml
-# These will be copied by initContainer from /data/mount to /data/validators
-secretMounts: []
-#  - name: keystore
-#    secretName: keystore
-#    path: /data/mount/0x0000
-#  - name: definitions
-#    secretName: definitions
-#    path: /data/mount
+# Copy keystore files based on what's described in the auto discovery feature doc
+# ref: https://lighthouse-book.sigmaprime.io/validator-management.html?highlight=--secrets-dir#populating-the-validator_definitionsyml-file
+# Create these secrets with `kubectl` prior. See Readme.
+
+keystoreSecretName: eth2-validator-keystore
+passwordSecretName: eth2-validator-password
 
 ports:
   metrics: 5064
 
 storage:
+  persistent: true
   capacity: 1Gi
 
 livenessProbe:
@@ -74,8 +70,8 @@ service:
 servicemonitor:
   enabled: false
 
+affinity: {}
+
 nodeSelector: {}
 
 tolerations: []
-
-affinity: {}

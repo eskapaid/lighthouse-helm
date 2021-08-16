@@ -17,19 +17,25 @@ spec:
         {{- include "lighthouse-validator.selectorLabels" . | nindent 8 }}
     spec:
       initContainers:
-        - name: setup
+        - name: copy-keystore
           image: busybox
-          command:
-          - /bin/sh
-          - -c
-          - mkdir -p /data/validators && cp -rL /data/mount/* /data/validators/
+          command: ["/bin/sh", "-c"]
+          args:
+          - |
+            set -e
+            cd /data/keystores/
+            echo "Importing keystores ..."
+            for name in *.json; do
+              echo "Importing ${name} ..."
+              mkdir -p /data/validators/imported/${name}
+              cp $name /data/validators/imported/${name}/voting-keystore.json
+              echo "Imported ${name}"
+            done
           volumeMounts:
           - name: validator-data
             mountPath: /data
-          {{- range .Values.secretMounts }}
-          - name: {{ .name }}
-            mountPath: {{ .path }}
-          {{- end }}
+          - name: keystores
+            mountPath: /data/keystores
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -50,6 +56,9 @@ spec:
           volumeMounts:
             - name: validator-data
               mountPath: /data
+            - name: passwords
+              mountPath: /data/secrets
+              readOnly: true
           ports:
             - name: metrics
               containerPort: {{ .Values.ports.metrics }}
@@ -66,11 +75,17 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       volumes:
-        {{- range .Values.secretMounts }}
-          - name: {{ .name }}
-            secret:
-              secretName: {{ .secretName }}
-        {{- end }}
+      - name: keystores
+        secret:
+          secretName: {{ .keystoreSecretName }}
+      - name: passwords
+        secret:
+          secretName: {{ .passwordSecretName }}
+      {{- if not .Values.storage.persistent }}
+      - name: validator-data
+        emptyDir: {}
+      {{- end }}
+  {{- if .Values.storage.persistent }}
   volumeClaimTemplates:
     - metadata:
         name: validator-data
@@ -80,4 +95,6 @@ spec:
         resources:
           requests:
             storage: {{ .Values.storage.capacity | quote }}
+  {{- end }}
+
 {{- end }}
