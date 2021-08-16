@@ -77,10 +77,10 @@ spec:
       volumes:
       - name: keystores
         secret:
-          secretName: {{ .keystoreSecretName }}
+          secretName: {{ .Values.keystoreSecretName }}
       - name: passwords
         secret:
-          secretName: {{ .passwordSecretName }}
+          secretName: {{ .Values.passwordSecretName }}
       {{- if not .Values.storage.persistent }}
       - name: validator-data
         emptyDir: {}
