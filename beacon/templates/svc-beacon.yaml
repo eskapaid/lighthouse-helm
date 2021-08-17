@@ -11,6 +11,9 @@ spec:
   selector:
     {{- include "lighthouse-beacon.selectorLabels" . | nindent 4 }}
   ports:
+    - name: http
+      port: {{ .Values.ports.http  }}
+      protocol: TCP
     - name: metrics
       port: {{ .Values.ports.metrics  }}
       protocol: TCP
