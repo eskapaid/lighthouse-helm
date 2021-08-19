@@ -31,3 +31,4 @@ jobs:
           charts_repo_url: https://eskapaid.github.io/helm-charts/
         env:
           CR_TOKEN: "${{ secrets.DEPLOY_TOKEN }}"
+          INPUT_CHARTS_REPO_URL: https://eskapaid.github.io/helm-charts/
