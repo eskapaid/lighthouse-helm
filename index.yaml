@@ -3,6 +3,16 @@ entries:
   lighthouse-beacon:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2021-08-19T04:06:52.418195387Z"
+    description: A Helm chart for the Lighthouse Beacon Chain Client
+    digest: 52577b674a1cedbdf79ac7de38f6e1bbf66853028ba65008be7f9e9118211218
+    name: lighthouse-beacon
+    type: application
+    urls:
+    - https://github.com/eskapaid/lighthouse-helm/releases/download/lighthouse-beacon-1.1.0/lighthouse-beacon-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2021-08-19T03:44:08.651434242Z"
     description: A Helm chart for the Lighthouse Beacon Chain Client
     digest: ded6810219745daed3b1a532ebc8807e8558c45dc304f311bd8b8133ec480e32
@@ -21,4 +31,15 @@ entries:
     urls:
     - https://github.com/eskapaid/lighthouse-helm/releases/download/lighthouse-beacon-0.1.0/lighthouse-beacon-0.1.0.tgz
     version: 0.1.0
-generated: "2021-08-19T03:59:22.844325564Z"
+  lighthouse-validator:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-08-19T04:06:52.608515518Z"
+    description: A Helm chart for the Lighthouse Validator Client
+    digest: 2bfc3c454cec1271ba77a4247de8eb340bde6b0d41a9f5fe376c9a313ca38b8c
+    name: lighthouse-validator
+    type: application
+    urls:
+    - https://github.com/eskapaid/lighthouse-helm/releases/download/lighthouse-validator-1.1.0/lighthouse-validator-1.1.0.tgz
+    version: 1.1.0
+generated: "2021-08-19T04:06:52.608534719Z"
