@@ -11,4 +11,14 @@ entries:
     urls:
     - https://github.com/eskapaid/lighthouse-helm/releases/download/lighthouse-beacon-0.1.2/lighthouse-beacon-0.1.2.tgz
     version: 0.1.2
-generated: "2021-08-19T03:44:08.651443243Z"
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-08-19T03:59:22.844313963Z"
+    description: A Helm chart for the Lighthouse Beacon Chain Client
+    digest: 3af837091aac0becee12338f038b35fdd17789a9afdd9ee01e7de0dda71242d5
+    name: lighthouse-beacon
+    type: application
+    urls:
+    - https://github.com/eskapaid/lighthouse-helm/releases/download/lighthouse-beacon-0.1.0/lighthouse-beacon-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-08-19T03:59:22.844325564Z"
