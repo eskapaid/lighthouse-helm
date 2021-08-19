@@ -24,18 +24,10 @@ jobs:
         with:
           version: v3.4.0
 
-      - name: Run chart-releaser for beacon
+      - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1
         with:
-          charts_dir: beacon
-          charts_repo_url: https://eskapaid.github.io/helm-charts/
-        env:
-          CR_TOKEN: "${{ secrets.DEPLOY_TOKEN }}"
-
-      - name: Run chart-releaser for validator
-        uses: helm/chart-releaser-action@v1.2.1
-        with:
-          charts_dir: validator
+          charts_dir: .
           charts_repo_url: https://eskapaid.github.io/helm-charts/
         env:
           CR_TOKEN: "${{ secrets.DEPLOY_TOKEN }}"
