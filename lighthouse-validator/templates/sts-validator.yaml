@@ -23,22 +23,23 @@ spec:
           args:
           - |
             set -e
-            cd /data/keystores/
+            cd {{ .Values.datadir }}/keystores/
             echo "Importing keystores ..."
             for name in *.json; do
               echo "Importing ${name} ..."
-              mkdir -p /data/validators/imported/${name}
-              cp $name /data/validators/imported/${name}/voting-keystore.json
+              mkdir -p {{ .Values.datadir }}/validators/imported/${name}
+              cp $name {{ .Values.datadir }}/validators/imported/${name}/voting-keystore.json
               echo "Imported ${name}"
             done
           volumeMounts:
           - name: validator-data
-            mountPath: /data
+            mountPath: {{ .Values.datadir }}
           - name: keystores
-            mountPath: /data/keystores
+            mountPath: {{ .Values.datadir }}/keystores
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.container.command }}
           command:
 {{ toYaml .Values.container.command | indent 12 }}
@@ -55,9 +56,9 @@ spec:
 {{ toYaml .Values.resources | indent 12 }}
           volumeMounts:
             - name: validator-data
-              mountPath: /data
+              mountPath: {{ .Values.datadir }}
             - name: passwords
-              mountPath: /data/secrets
+              mountPath: {{ .Values.datadir }}/secrets
               readOnly: true
           ports:
             - name: metrics
@@ -81,9 +82,14 @@ spec:
       - name: passwords
         secret:
           secretName: {{ .Values.passwordSecretName }}
-      {{- if not .Values.storage.persistent }}
+      {{- if .Values.storage.emptyDir }}
       - name: validator-data
         emptyDir: {}
+      {{- end }}
+      {{- if .Values.storage.claim }}
+      - name: validator-data
+        persistentVolumeClaim:
+          claimName: {{ .Values.storage.claimName }}
       {{- end }}
   {{- if .Values.storage.persistent }}
   volumeClaimTemplates:
